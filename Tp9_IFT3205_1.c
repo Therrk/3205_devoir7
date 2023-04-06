@@ -1,11 +1,12 @@
 /*------------------------------------------------------*/
 /* Prog    : Tp9_IFT3205.c                              */
-/* Auteur  :                                            */
+/* Auteur  : Ã‰lie Leblanc, Justin Veilleux              */
 /* Date    : --/--/2010                                 */
 /* version :                                            */ 
 /* langage : C                                          */
 /* labo    : DIRO                                       */
 /*------------------------------------------------------*/
+// elie.leblanc@umontreal.ca justin.veilleux@umontreal.ca
 
 /*------------------------------------------------*/
 /* FICHIERS INCLUS -------------------------------*/
@@ -42,12 +43,23 @@ int main(int argc,char **argv)
 
    length=256;
    float*  SignX=fmatrix_allocate_1d(length);
-  
-   //Signal d'entré  x(n) aléatoire compris entre [0::200]
+   float*  SignY=fmatrix_allocate_1d(length);
+   float rho = 0.99;
+   float theta = PI/8;
+
+   //Signal d'entrï¿½  x(n) alï¿½atoire compris entre [0::200]
    for(i=0;i<length;i++) SignX[i]=(int)(((float)rand()/RAND_MAX)*200.0);
+
+   SignY[0]=SignX[0];
+   SignY[1]=SignX[1]-SignX[0]+2*rho*cos(theta)*SignY[0];
+   for (i = 2; i < 256; i++) {
+	   SignY[i]=SignX[i]-SignX[i-1]+2*rho*cos(theta)*SignY[i-1]-pow(rho,2)*SignY[i-2];
+   }
+   
 
    //Sauvegarde en fichier .dat
    SaveSignalDat("SignalX",SignX,length); 
+   SaveSignalDat("SignalY",SignY,length); 
 
    //Visu Ecran
    strcpy(BufSystVisuSig,NAME_VISUALISER);
@@ -55,13 +67,17 @@ int main(int argc,char **argv)
    printf(" %s",BufSystVisuSig);
    system(BufSystVisuSig);
 
+   strcpy(BufSystVisuSig,NAME_VISUALISER);
+   strcat(BufSystVisuSig,"SignalY.dat&");
+   printf(" %s",BufSystVisuSig);
+   system(BufSystVisuSig);
 
    //---------------------------------------------
    //Sauvegarde de SignZ (30000 echantillons 
-   //aléatoire entre [0::200]) dans un 
+   //alï¿½atoire entre [0::200]) dans un 
    //fichier .wav avec une periode 
    //d'echantillonnage de 10000: Nb echant/secondes
-   //(pour 3 secondes d'écoute)
+   //(pour 3 secondes d'ï¿½coute)
    //----------------------------------------------
    //----------------------------------------------
    if (1)
