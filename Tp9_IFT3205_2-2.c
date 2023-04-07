@@ -41,34 +41,22 @@ int main(int argc,char **argv)
   //Question 1
   //===============================
 
-   length=256;
-   float*  SignX=fmatrix_allocate_1d(length);
-   float*  SignY=fmatrix_allocate_1d(length);
+   float*  Signin=LoadSignalDat("SoundFile",&length);
+   float*  Signout=fmatrix_allocate_1d(length);
    float rho = 0.99;
-   float theta = PI/8;
+   float theta = 11025*PI/250;
 
-   //Signal d'entr�  x(n) al�atoire compris entre [0::200]
-   for(i=0;i<length;i++) SignX[i]=(int)(((float)rand()/RAND_MAX)*200.0);
-
-   SignY[0]=SignX[0];
-   SignY[1]=SignX[1]-SignX[0]+2*rho*cos(theta)*SignY[0];
-   for (i = 2; i < 256; i++) {
-	   SignY[i]=SignX[i]-SignX[i-1]+2*rho*cos(theta)*SignY[i-1]-pow(rho,2)*SignY[i-2];
+   for (i = 0; i < length; i++) {
+      Signout[i]= Signin[i]+cos(i*theta);
    }
    
 
    //Sauvegarde en fichier .dat
-   SaveSignalDat("SignalX",SignX,length); 
-   SaveSignalDat("SignalY",SignY,length); 
+   SaveSignalDatWav("Signout",Signout,length,11025); 
 
    //Visu Ecran
    strcpy(BufSystVisuSig,NAME_VISUALISER);
-   strcat(BufSystVisuSig,"SignalX.dat&");
-   printf(" %s",BufSystVisuSig);
-   system(BufSystVisuSig);
-
-   strcpy(BufSystVisuSig,NAME_VISUALISER);
-   strcat(BufSystVisuSig,"SignalY.dat&");
+   strcat(BufSystVisuSig,"Signout.dat&");
    printf(" %s",BufSystVisuSig);
    system(BufSystVisuSig);
 
