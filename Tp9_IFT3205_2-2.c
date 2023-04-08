@@ -41,17 +41,18 @@ int main(int argc,char **argv)
   //Question 1
   //===============================
 
-   float*  Signin=LoadSignalDat("SoundFile",&length);
-   float*  Signout=fmatrix_allocate_1d(length);
-   float theta = 500*2*PI/11025;
+   float*  SignR=LoadSignalDat("SoundFile",&length);
+   float*  SignI=fmatrix_allocate_1d(length);
+   float*  SignR_trans=fmatrix_allocate_1d(length);
+   float*  SignI_trans=fmatrix_allocate_1d(length);
 
-   for (i = 0; i < length; i++) {
-      Signout[i] = Signin[i]+cos(i*theta);
-   }
-   
-   printf("%i\n",length);
+   int freq = 500*length/11025;
+
+   dft(SignR, SignI, SignR_trans, SignI_trans, length, 0);
+   SignI_trans[freq]+=1;
+   dft(SignR, SignI, SignR_trans, SignI_trans, length, 1);
    //Sauvegarde en fichier .dat
-   SaveSignalDatWav("Sound_degraded",Signout,length,11025); 
+   SaveSignalDat("Sound_degraded",SignR,length); 
 
    //Visu Ecran
    strcpy(BufSystVisuSig,NAME_VISUALISER);
