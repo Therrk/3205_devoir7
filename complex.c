@@ -1,3 +1,6 @@
+#include <math.h>
+#include <stdio.h>
+
 typedef struct complex {
     float r;
     float im;
@@ -8,11 +11,6 @@ complex complex_mul(complex a, complex b) {
     out.r = a.r * b.r - a.im * b.im;
     out.im = a.r * b.im + a.im * b.r;
     return out;
-}
-
-float complex_norm(complex in) {
-    float out = in.r * in.r + in.im * in.im;
-    out = sqrt(out);
 }
 
 complex complex_exp(complex in) {
@@ -37,5 +35,18 @@ complex r2c(float r) {
     return out;
 }
 
-complex J = {.r = 1.0, .im = 0.0};
+complex complex_neg(complex in) {
+    complex out = {.r = -in.r, .im = -in.im};
+    return out;
+}
 
+complex complex_add(complex a, complex b) {
+    complex out = {.r = a.r + b.r, .im = a.im + b.im};
+    return out;
+}
+
+complex J = {.r = 0.0, .im = 1.0};
+
+void complex_print(complex n) {
+    printf("%f + %fim", n.r, n.im);
+}
