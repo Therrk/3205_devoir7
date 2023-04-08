@@ -51,11 +51,11 @@ int main(int argc,char **argv)
    
    printf("%i\n",length);
    //Sauvegarde en fichier .dat
-   SaveSignalDatWav("Signout",Signout,length,11025); 
+   SaveSignalDatWav("Sound_degraded",Signout,length,11025); 
 
    //Visu Ecran
    strcpy(BufSystVisuSig,NAME_VISUALISER);
-   strcat(BufSystVisuSig,"Signout.dat&");
+   strcat(BufSystVisuSig,"Sound_degraded.dat&");
    printf(" %s",BufSystVisuSig);
    system(BufSystVisuSig);
 
