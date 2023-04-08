@@ -105,6 +105,17 @@ int main(int argc,char **argv)
     apply_the_filter(signal_r, length);
     SaveSignalDat("step_transmitted", signal_r, length);
 
+
+    signal_r = LoadSignalDat("SoundFile", &length);
+    float * signal_r_copy = malloc(sizeof(float)*length);
+    for (int i = 0;i < length;i++)
+        signal_r_copy[i] = signal_r[i];
+    apply_the_filter(signal_r, length);
+
+    SaveSignalDat("FilteredSoundFile", signal_r, length);
+
+
+
     return 0; 	 
 }
 
