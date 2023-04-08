@@ -43,14 +43,13 @@ int main(int argc,char **argv)
 
    float*  Signin=LoadSignalDat("SoundFile",&length);
    float*  Signout=fmatrix_allocate_1d(length);
-   float rho = 0.99;
-   float theta = 11025*PI/250;
+   float theta = 500*2*PI/11025;
 
    for (i = 0; i < length; i++) {
-      Signout[i]= Signin[i]+cos(i*theta);
+      Signout[i] = Signin[i]+cos(i*theta);
    }
    
-
+   printf("%i\n",length);
    //Sauvegarde en fichier .dat
    SaveSignalDatWav("Signout",Signout,length,11025); 
 
@@ -68,7 +67,7 @@ int main(int argc,char **argv)
    //(pour 3 secondes d'�coute)
    //----------------------------------------------
    //----------------------------------------------
-   if (1)
+   if (0)
       {
        length=30000;
        float*  SignZ=fmatrix_allocate_1d(length);
