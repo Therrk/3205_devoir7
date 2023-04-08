@@ -82,34 +82,12 @@ void apply_the_filter(float * signal_r, int length) {
 int main(int argc,char **argv)
 {
 
-
-
-    // Dirac
-
-    int length = 100;
-
-    float * signal_r = malloc(sizeof(float) * length);
-    for (int i = 0;i < length;i++) {
-        signal_r[i] = 0.0;
-    }
-
-    signal_r[0] = 1.0;
-
-    apply_the_filter(signal_r, length);
-    SaveSignalDat("dirac_transmitted", signal_r, length);
+    int length;
     
-
-    for (int i = 0;i < length;i++){
-        signal_r[i] = 1.0;
-    }
-
-    for (int i = 0;i < 5;i++) {
-        signal_r[i] = 0.0;
-    }
-
+    float* signal_r = LoadSignalDat("SoundFile", &length);
     apply_the_filter(signal_r, length);
-    SaveSignalDat("step_transmitted", signal_r, length);
 
+    SaveSignalDatWav("FilteredSoundFile", signal_r, length,11025);
     return 0; 	 
 }
 
